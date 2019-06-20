@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^index\.html?$ /neverend/index.php [NC,R,L]
+RewriteRule ^login-page\.html?$ /neverend/login-page.php [NC,R,L]
