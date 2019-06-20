@@ -1,6 +1,8 @@
 <?php  
+if (!isset($_session)) {
+    session_start();
+    }
  require('db_connect.php');
-
 if (isset($_POST['user_id']) and isset($_POST['user_pass'])){
 	
 // Assigning POST values to variables.
@@ -12,15 +14,17 @@ $query = "SELECT * FROM `user` WHERE userName='$username' and password='$passwor
  
 $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
 $count = mysqli_num_rows($result);
-
+// *** Validate request to login to this site.
 if ($count == 1){
-
-//echo "Login Credentials verified";
-echo "<script type='text/javascript'>alert('Login Credentials verified')</script>";
-
+    $data = mysqli_fetch_array($result);
+    $_session["user_name"]= $data['userName'];
+    header("Location: index.html");
+    //echo "Login Credentials verified";
+    //echo "<script type='text/javascript'>alert('Login Credentials verified')</script>";
 }else{
 echo "<script type='text/javascript'>alert('Invalid Login Credentials')</script>";
 //echo "Invalid Login Credentials";
 }
+exit();
 }
 ?>
